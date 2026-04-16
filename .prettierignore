@@ -1,0 +1,9 @@
+.next
+out
+build
+node_modules
+pnpm-lock.yaml
+package-lock.json
+*.min.js
+# Regenerate with openapi-typescript; avoid churn on `pnpm format`
+types/api.d.ts
