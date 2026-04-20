@@ -1,1 +1,1 @@
-export { BreakingNews } from './breaking-news';
+export { BreakingNewsBanner } from './breaking-news';

@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
   --background: #ffffff;
@@ -10,6 +10,25 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --spacing-general: var(--padding-general);
+}
+
+@layer utilities {
+  .general-container {
+    @apply mx-auto max-w-7xl;
+  }
+
+  .general-padding-x {
+    @apply px-4 sm:px-6 lg:px-8;
+  }
+
+  .general-padding-y {
+    @apply py-6;
+  }
+
+  .general-button {
+    @apply inline-flex shrink-0 items-center justify-center rounded-md px-6 py-3 text-sm font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
