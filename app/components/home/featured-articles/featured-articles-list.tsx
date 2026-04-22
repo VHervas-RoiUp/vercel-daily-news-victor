@@ -1,8 +1,8 @@
 import { FeaturedArticleCard } from './featured-article-card';
-import { getFeaturedArticles } from '@/lib/api/featured-articles';
+import { getArticleList } from '@/lib/api/articles';
 
 export async function FeaturedArticlesList() {
-  const featuredArticles = await getFeaturedArticles({
+  const featuredArticles = await getArticleList({
     featured: true,
     limit: 6,
   });

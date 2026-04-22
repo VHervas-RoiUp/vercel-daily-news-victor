@@ -1,7 +1,10 @@
+import { Suspense } from 'react';
 import Link from 'next/link';
 import { Bell } from '@geist-ui/icons';
+
 import Triangle from '@/components/ui/triangle';
 import NavLinks from '@/components/layout/nav-links';
+import NavLinksFallback from '@/components/layout/nav-links-fallback';
 
 export default function Header() {
   return (
@@ -20,7 +23,9 @@ export default function Header() {
               Vercel Daily
             </span>
           </Link>
-          <NavLinks />
+          <Suspense fallback={<NavLinksFallback />}>
+            <NavLinks />
+          </Suspense>
         </div>
         <button
           type="button"
