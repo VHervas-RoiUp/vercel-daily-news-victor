@@ -16,8 +16,9 @@ export function FeaturedArticleCard({ article }: FeaturedArticleCardProps) {
             src={article.imageSrc}
             alt={article.imageAlt}
             fill
+            sizes="(max-width: 767px) 100vw, (max-width: 1280px) 33vw, 380px"
             className="object-cover transition duration-300 group-hover:scale-105"
-            loading="lazy"
+            priority
           />
         </div>
         <p className="mt-4 text-xs font-medium uppercase tracking-wide text-gray-500">

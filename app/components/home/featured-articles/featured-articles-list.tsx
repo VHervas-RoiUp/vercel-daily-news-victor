@@ -7,8 +7,6 @@ export async function FeaturedArticlesList() {
     limit: 6,
   });
 
-  console.log(featuredArticles);
-
   if (!featuredArticles) return null;
 
   return (
