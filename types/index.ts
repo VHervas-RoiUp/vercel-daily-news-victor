@@ -2,6 +2,7 @@ import { components } from './api';
 
 /* Data types re-export to be more usable */
 export type Article = components['schemas']['Article'];
+export type ContentBlock = components['schemas']['ContentBlock'];
 export type Category = components['schemas']['Category'];
 export type BreakingNews = components['schemas']['BreakingNews'];
 export type Subscription = components['schemas']['Subscription'];

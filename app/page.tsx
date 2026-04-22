@@ -1,8 +1,8 @@
 import { Suspense } from 'react';
 
-import { BreakingNewsBanner } from '@/components/home/breaking-news';
-import { HeroSection } from '@/components/home/hero-section';
-import { FeaturedArticles } from '@/components/home/featured-articles/featured-articles';
+import { FeaturedArticles } from '@/home/featured-articles';
+import { BreakingNewsBanner } from '@/home/breaking-news';
+import { HeroSection } from '@/home/hero-section';
 
 export default function Home() {
   return (

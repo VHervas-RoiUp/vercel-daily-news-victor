@@ -1,7 +1,7 @@
 import { apiFetch } from './client';
 import { Article, ArticleResponse, ArticleListResponse } from 'types';
 
-const CACHE_TIME = 5;
+const CACHE_TIME = 3600;
 
 export type GetArticleListParams = {
   page?: number;
@@ -46,6 +46,17 @@ export async function getArticleDetails(id: string): Promise<Article | null> {
     return res.data ?? null;
   } catch (err) {
     if (err instanceof Error && err.cause === 404) return null;
+    throw err;
+  }
+}
+
+export async function getTrendingArticles(): Promise<Article[] | null> {
+  try {
+    const res = await apiFetch<ArticleListResponse>('/articles/trending', {
+      next: { revalidate: CACHE_TIME },
+    });
+    return res.data ?? null;
+  } catch (err) {
     throw err;
   }
 }
