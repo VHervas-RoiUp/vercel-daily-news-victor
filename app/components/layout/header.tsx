@@ -5,7 +5,7 @@ import NavLinks from '@/components/layout/nav-links';
 
 export default function Header() {
   return (
-    <header className="border-b border-neutral-200 bg-white">
+    <header className="border-b border-neutral-200 bg-white sticky top-0 z-50">
       <nav
         className="mx-auto flex h-14 max-w-7xl items-center justify-between general-padding-x"
         aria-label="Main"
