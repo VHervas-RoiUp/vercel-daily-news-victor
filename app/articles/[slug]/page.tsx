@@ -8,6 +8,8 @@ import {
   ArticleHeader,
 } from './article-details';
 import { TrendingArticles } from './trending-articles';
+import SubscribeSection from '@/components/subscription/subscribe-paywall';
+import { Suspense } from 'react';
 
 type ArticlePageProps = {
   params: Promise<{ slug: string }>;
@@ -41,7 +43,12 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           <ArticleBackButton />
           <ArticleHeader article={article} />
           <FeaturedImage article={article} />
-          <ArticleContent article={article} />
+          <Suspense>
+            <ArticleContent article={article} />
+          </Suspense>
+          <Suspense>
+            <SubscribeSection />
+          </Suspense>
         </div>
         <aside className="min-w-0 space-y-10 lg:sticky lg:top-24 lg:self-start">
           <TrendingArticles exclude={[slug]} />

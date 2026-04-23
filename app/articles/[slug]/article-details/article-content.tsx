@@ -1,9 +1,11 @@
 import { Article } from '@/types';
 
 import { ContentBlockView } from './content-block-view';
+import { getSubscription } from '@/lib/api/subscription';
 
-export function ArticleContent({ article }: { article: Article }) {
-  console.log(article.tags);
+export async function ArticleContent({ article }: { article: Article }) {
+  const subscription = await getSubscription();
+  console.log(subscription);
   return (
     <article className="min-w-0">
       <div className="prose prose-neutral mt-10 max-w-none prose-p:text-base prose-p:leading-7 prose-p:text-neutral-800">
