@@ -1,19 +1,12 @@
-import { getTrendingArticles } from '@/lib/api/articles';
-
-import { TrendingArticleItem } from './trending-article-item';
+import { Suspense } from 'react';
+import { TrendingArticlesList } from './trending-articles-list';
+import { TrendingArticlesSkeleton } from './trending-articles-skeleton';
 
 interface TrendingArticlesProps {
   exclude?: string[];
 }
 
 export async function TrendingArticles({ exclude }: TrendingArticlesProps) {
-  const trendingArticles = await getTrendingArticles();
-
-  const items =
-    trendingArticles?.filter((a) => a.slug && !exclude?.includes(a.slug)) ?? [];
-
-  if (!items.length) return null;
-
   return (
     <section className="min-w-0" aria-labelledby="trending-heading">
       <p className="text-xs font-medium uppercase tracking-wide text-neutral-500">
@@ -25,14 +18,9 @@ export async function TrendingArticles({ exclude }: TrendingArticlesProps) {
       >
         More from Vercel Daily
       </h2>
-      <ul className="mt-8 list-none">
-        {items.map((article) => (
-          <TrendingArticleItem
-            key={article.id ?? article.slug}
-            article={article}
-          />
-        ))}
-      </ul>
+      <Suspense fallback={<TrendingArticlesSkeleton />}>
+        <TrendingArticlesList exclude={exclude} />
+      </Suspense>
     </section>
   );
 }

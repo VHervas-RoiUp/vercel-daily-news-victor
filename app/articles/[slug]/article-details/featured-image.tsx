@@ -11,6 +11,7 @@ export function FeaturedImage({ article }: { article: Article }) {
           width={1000}
           height={1000}
           className="aspect-[16/9] w-full object-cover"
+          loading="eager"
         />
       )}
     </figure>
