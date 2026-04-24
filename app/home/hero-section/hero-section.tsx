@@ -8,7 +8,7 @@ import HeroSubscriptionCta from './hero-subscription-cta';
 export function HeroSection() {
   return (
     <section className="bg-white" aria-labelledby="hero-heading">
-      <div className="flex max-w-4xl flex-col items-start text-left">
+      <div className="flex w-full min-w-0 max-w-4xl flex-col items-start text-left">
         <p
           id="hero-kicker"
           className="mb-5 text-sm font-medium uppercase text-gray-500 tracking-wide"
@@ -17,7 +17,7 @@ export function HeroSection() {
         </p>
         <h1
           id="hero-heading"
-          className="mb-6 max-w-3xl text-6xl font-extrabold text-black"
+          className="mb-6 w-full min-w-0 max-w-3xl break-words text-3xl font-extrabold text-black sm:text-4xl md:text-5xl lg:text-6xl"
         >
           News and insights for modern web developers.
         </h1>

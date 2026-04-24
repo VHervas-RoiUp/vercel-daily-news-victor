@@ -14,7 +14,10 @@ export default async function HeaderSubscriptionStatus() {
   return (
     <form action={subscribeAction}>
       <SubscribeFormPendingBridge />
-      <SubscribeButton label="Subscribe now" className="min-h-7.5 h-7.5" />
+      <SubscribeButton
+        label="Subscribe now"
+        className="h-9 min-h-9 whitespace-nowrap px-4 text-xs sm:h-7.5 sm:min-h-7.5 sm:px-5 sm:text-sm sm:whitespace-normal"
+      />
     </form>
   );
 }

@@ -13,28 +13,46 @@ export default async function Header() {
   const brand = config?.publicationName ?? getDefaultHeaderBrand();
 
   return (
-    <header className="border-b border-neutral-200 bg-white sticky top-0 z-50">
-      <nav
-        className="mx-auto flex h-14 max-w-7xl items-center justify-between general-padding-x"
-        aria-label="Main"
-      >
-        <div className="flex items-center gap-8 sm:gap-10">
-          <Link
-            href="/"
-            className="flex items-center gap-2 text-neutral-900 no-underline"
-          >
-            <Triangle />
-            <span className="text-sm font-bold tracking-tight sm:text-base">
-              {brand}
-            </span>
-          </Link>
+    <header className="sticky top-0 z-50 border-b border-neutral-200 bg-white">
+      <nav aria-label="Main">
+        <div className="mx-auto hidden h-14 max-w-7xl items-center justify-between general-padding-x sm:flex">
+          <div className="flex items-center gap-8 sm:gap-10">
+            <Link
+              href="/"
+              className="flex items-center gap-2 text-neutral-900 no-underline"
+            >
+              <Triangle />
+              <span className="text-sm font-bold tracking-tight sm:text-base">
+                {brand}
+              </span>
+            </Link>
+            <Suspense fallback={<NavLinksFallback />}>
+              <NavLinks />
+            </Suspense>
+          </div>
+          <Suspense>
+            <HeaderSubscriptionStatus />
+          </Suspense>
+        </div>
+        <div className="mx-auto flex max-w-7xl flex-col gap-3 py-3 general-padding-x sm:hidden">
+          <div className="flex items-center justify-between gap-3">
+            <Link
+              href="/"
+              className="flex min-w-0 items-center gap-2 text-neutral-900 no-underline"
+            >
+              <Triangle />
+              <span className="truncate text-sm font-bold tracking-tight">
+                {brand}
+              </span>
+            </Link>
+            <Suspense>
+              <HeaderSubscriptionStatus />
+            </Suspense>
+          </div>
           <Suspense fallback={<NavLinksFallback />}>
             <NavLinks />
           </Suspense>
         </div>
-        <Suspense>
-          <HeaderSubscriptionStatus />
-        </Suspense>
       </nav>
     </header>
   );
