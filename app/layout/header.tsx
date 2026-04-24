@@ -1,10 +1,10 @@
 import { Suspense } from 'react';
 import Link from 'next/link';
-import { Bell } from '@geist-ui/icons';
 
 import Triangle from '@/components/ui/triangle';
 import NavLinks from '@/layout/nav-links';
 import NavLinksFallback from '@/layout/nav-links-fallback';
+import HeaderSubscriptionStatus from '@/components/subscription/header-subscription-status';
 
 export default function Header() {
   return (
@@ -27,13 +27,9 @@ export default function Header() {
             <NavLinks />
           </Suspense>
         </div>
-        <button
-          type="button"
-          className="rounded-full p-2 text-neutral-500 transition-colors hover:bg-neutral-100 hover:text-neutral-900"
-          aria-label="Notifications"
-        >
-          <Bell size={20} strokeWidth={1.75} />
-        </button>
+        <Suspense>
+          <HeaderSubscriptionStatus />
+        </Suspense>
       </nav>
     </header>
   );

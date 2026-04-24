@@ -16,3 +16,8 @@ export const setSubscriptionToken = async (token: string) => {
     path: '/',
   });
 };
+
+export const clearSubscriptionToken = async () => {
+  const cookieStore = await cookies();
+  cookieStore.delete(SUBSCRIPTION_TOKEN_COOKIE_NAME);
+};

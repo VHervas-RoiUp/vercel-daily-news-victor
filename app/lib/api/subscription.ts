@@ -12,18 +12,13 @@ export const createSubscription = async () => {
   return response.data as Subscription;
 };
 
-export const activateSubscription = async () => {
-  const token = await getSubscriptionToken();
-  if (!token) {
-    return null;
-  }
+export const activateSubscription = async (token: string) => {
   const response = await apiFetch<SubscriptionResponse>('/subscription', {
     method: 'POST',
     headers: {
       'x-subscription-token': token,
     },
   });
-  console.log('activateSubscription', response.data);
   return response.data as Subscription;
 };
 
@@ -39,5 +34,15 @@ export const getSubscription = async () => {
     },
   });
   console.log(response.data);
+  return response.data as Subscription;
+};
+
+export const deleteSubscription = async (token: string) => {
+  const response = await apiFetch<SubscriptionResponse>('/subscription', {
+    method: 'DELETE',
+    headers: {
+      'x-subscription-token': token,
+    },
+  });
   return response.data as Subscription;
 };
