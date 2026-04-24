@@ -1,6 +1,6 @@
 import { FeaturedArticleCard } from './featured-article-card';
 import { getArticleList } from '@/lib/api/articles';
-import { formatPublishedDateShort } from '@/lib/date-service';
+import { formatPublishedDateShort } from '@/lib/services/date';
 
 export async function FeaturedArticlesList() {
   const featuredArticles = await getArticleList({

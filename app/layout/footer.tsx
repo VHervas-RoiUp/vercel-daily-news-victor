@@ -1,15 +1,14 @@
 import { Suspense } from 'react';
 
+import { getDefaultSiteName } from '@/lib/services/env-defaults';
 import { getPublicationConfig } from '@/lib/api/publication';
 
 import { CopyrightYear } from './copyright-year';
 import { CopyrightYearSkeleton } from './copyright-year-skeleton';
 
-const FALLBACK_SITE_NAME = 'Vercel Daily News';
-
 export default async function Footer() {
   const config = await getPublicationConfig();
-  const siteName = config?.publicationName ?? FALLBACK_SITE_NAME;
+  const siteName = config?.publicationName ?? getDefaultSiteName();
 
   return (
     <footer className="border-t border-neutral-200 bg-white w-full">

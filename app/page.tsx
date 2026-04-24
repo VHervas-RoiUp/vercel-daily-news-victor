@@ -5,20 +5,19 @@ import { FeaturedArticles } from '@/home/featured-articles';
 import { BreakingNewsBanner } from '@/home/breaking-news';
 import { HeroSection } from '@/home/hero-section';
 import { getPublicationConfig } from '@/lib/api/publication';
-
-const HOME_DESCRIPTION =
-  'Changelogs, engineering deep dives, customer stories, and community updates from Vercel Daily.';
-
-const SITE_FALLBACK = 'Vercel Daily News';
+import {
+  getDefaultSiteName,
+  getHomePageDescription,
+} from '@/lib/services/env-defaults';
 
 export async function generateMetadata(): Promise<Metadata> {
   const config = await getPublicationConfig();
-  const name = config?.publicationName ?? SITE_FALLBACK;
+  const name = config?.publicationName ?? getDefaultSiteName();
   const template = config?.seo?.titleTemplate ?? `%s | ${name}`;
 
   return {
     title: { absolute: template.replace('%s', 'Home') },
-    description: HOME_DESCRIPTION,
+    description: getHomePageDescription(),
     openGraph: { url: '/' },
   };
 }

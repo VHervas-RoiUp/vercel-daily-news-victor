@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { formatPublishedDateShort } from '@/lib/date-service';
+import { formatPublishedDateShort } from '@/lib/services/date';
 import type { Article } from '@/types';
 
 export function TrendingArticleItem({ article }: { article: Article }) {

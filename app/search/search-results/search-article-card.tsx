@@ -2,7 +2,7 @@ import { ArrowRight } from '@geist-ui/icons';
 import Link from 'next/link';
 import Image from 'next/image';
 
-import { formatPublishedDateShort } from '@/lib/date-service';
+import { formatPublishedDateShort } from '@/lib/services/date';
 import type { Article } from 'types';
 
 const CATEGORY_BADGE: Record<string, string> = {

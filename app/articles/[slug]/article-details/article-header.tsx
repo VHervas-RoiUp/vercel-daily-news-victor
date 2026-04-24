@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import { formatPublishedDateLong } from '@/lib/date-service';
+import { formatPublishedDateLong } from '@/lib/services/date';
 import { Article } from '@/types';
 export function ArticleHeader({ article }: { article: Article }) {
   return (
