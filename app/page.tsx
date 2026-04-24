@@ -2,7 +2,10 @@ import type { Metadata } from 'next';
 import { Suspense } from 'react';
 
 import { FeaturedArticles } from '@/home/featured-articles';
-import { BreakingNewsBanner } from '@/home/breaking-news';
+import {
+  BreakingNewsBanner,
+  BreakingNewsBannerSkeleton,
+} from '@/home/breaking-news';
 import { HeroSection } from '@/home/hero-section';
 import { getPublicationConfig } from '@/lib/api/publication';
 import {
@@ -25,8 +28,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default function Home() {
   return (
     <>
-      {/* TODO: maybe add skeleton, depending if we want to show it loading, but in the case the request returns null, it will be weird */}
-      <Suspense fallback={<div className="h-14 w-full"></div>}>
+      <Suspense fallback={<BreakingNewsBannerSkeleton />}>
         <BreakingNewsBanner />
       </Suspense>
       <div className="general-container general-padding-x flex flex-col gap-16 py-16">

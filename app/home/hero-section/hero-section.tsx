@@ -4,6 +4,7 @@ import { Suspense } from 'react';
 import { Button } from '@/components/ui/button';
 
 import HeroSubscriptionCta from './hero-subscription-cta';
+import { HeroSubscriptionCtaSkeleton } from './hero-subscription-cta-skeleton';
 
 export function HeroSection() {
   return (
@@ -37,14 +38,7 @@ export function HeroSection() {
               </span>
             </Link>
           </Button>
-          <Suspense
-            fallback={
-              <div
-                className="inline-block min-h-11 w-32 max-w-full shrink-0 opacity-0"
-                aria-hidden
-              />
-            }
-          >
+          <Suspense fallback={<HeroSubscriptionCtaSkeleton />}>
             <HeroSubscriptionCta />
           </Suspense>
         </nav>
