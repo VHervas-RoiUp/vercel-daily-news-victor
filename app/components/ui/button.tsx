@@ -1,6 +1,6 @@
 import { forwardRef, type ComponentPropsWithoutRef } from 'react';
 import { Slot } from '@radix-ui/react-slot';
-import clsx from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
 const base =
   'cursor-pointer inline-flex min-h-10 shrink-0 items-center justify-center rounded-md border px-5 text-sm font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black disabled:cursor-not-allowed disabled:border-neutral-200 disabled:bg-neutral-100 disabled:text-neutral-500 disabled:hover:border-neutral-200 disabled:hover:bg-neutral-100 disabled:hover:text-neutral-500';
@@ -28,7 +28,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       <Comp
         ref={ref}
         type={asChild ? undefined : type}
-        className={clsx(base, variants[variant], className)}
+        className={twMerge(base, variants[variant], className)}
         {...props}
       />
     );

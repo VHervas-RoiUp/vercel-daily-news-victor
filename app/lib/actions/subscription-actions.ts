@@ -1,6 +1,6 @@
 'use server';
 
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
 import {
   activateSubscription,
   createSubscription,
@@ -24,6 +24,7 @@ export async function subscribeAction() {
   if (data.token) {
     await setSubscriptionToken(data.token);
     await activateSubscription(data.token);
+    revalidateTag('subscription', data.token);
     revalidatePath('/');
   }
 }

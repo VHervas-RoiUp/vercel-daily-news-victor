@@ -2,6 +2,7 @@ import { Check, Lock } from '@geist-ui/icons';
 
 import { subscribeAction } from '@/lib/actions/subscription-actions';
 import { getSubscription } from '@/lib/api/subscription';
+import { SubscribeFormPendingBridge } from './subscribe-form-pending-context';
 import SubscribeButton from './subscribe-button';
 
 const benefits = [
@@ -36,7 +37,15 @@ export default async function SubscribePaywall() {
         deep dives, changelogs, and customer stories.
       </p>
       <form action={subscribeAction} className="mt-8 flex justify-center">
-        <SubscribeButton />
+        <SubscribeFormPendingBridge />
+        <SubscribeButton
+          label={
+            <>
+              <span>Subscribe free</span>
+              <span aria-hidden>→</span>
+            </>
+          }
+        />
       </form>
       <ul
         className="mt-8 flex flex-col items-center justify-center gap-3 text-sm text-neutral-500 sm:flex-row sm:flex-wrap sm:gap-x-8 sm:gap-y-2"

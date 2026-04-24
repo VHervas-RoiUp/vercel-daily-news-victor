@@ -1,6 +1,9 @@
 import Link from 'next/link';
+import { Suspense } from 'react';
 
 import { Button } from '@/components/ui/button';
+
+import HeroSubscriptionCta from './hero-subscription-cta';
 
 export function HeroSection() {
   return (
@@ -26,7 +29,7 @@ export function HeroSection() {
           updates — all in one place.
         </p>
         <nav className="flex flex-wrap gap-3" aria-label="Featured actions">
-          <Button asChild variant="primary">
+          <Button asChild variant="primary" className="min-h-10 h-10">
             <Link href="/articles">
               Browse articles
               <span aria-hidden="true" className="text-lg leading-none ml-2">
@@ -34,9 +37,16 @@ export function HeroSection() {
               </span>
             </Link>
           </Button>
-          <Button asChild>
-            <Link href="/subscribe">Subscribe</Link>
-          </Button>
+          <Suspense
+            fallback={
+              <div
+                className="inline-block min-h-11 w-32 max-w-full shrink-0 opacity-0"
+                aria-hidden
+              />
+            }
+          >
+            <HeroSubscriptionCta />
+          </Suspense>
         </nav>
       </div>
     </section>
