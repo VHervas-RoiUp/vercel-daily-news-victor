@@ -1,44 +1,48 @@
 'use client';
 
-import clsx from 'clsx';
-import { useState } from 'react';
+import { ChevronDown } from '@geist-ui/icons';
+import { useId, useState } from 'react';
 
-const TAGS = [
-  { id: 'all', label: 'All' },
-  { id: 'engineering', label: 'Engineering' },
-  { id: 'changelog', label: 'Changelog' },
-  { id: 'company-news', label: 'Company News' },
-  { id: 'customer-story', label: 'Customer Story' },
+const OPTIONS = [
+  { value: 'All', label: 'All categories' },
+  { value: 'Engineering', label: 'Engineering' },
+  { value: 'Changelog', label: 'Changelog' },
+  { value: 'Company News', label: 'Company News' },
+  { value: 'Customer Story', label: 'Customer Story' },
 ] as const;
 
 export default function SearchTags() {
-  const [activeId, setActiveId] = useState<(typeof TAGS)[number]['id']>('all');
+  const id = useId();
+  const [value, setValue] = useState<string>(OPTIONS[0].value);
 
   return (
-    <div
-      className="flex flex-wrap gap-3"
-      role="toolbar"
-      aria-label="Search filters"
-    >
-      {TAGS.map((tag) => {
-        const active = activeId === tag.id;
-        return (
-          <button
-            key={tag.id}
-            type="button"
-            aria-pressed={active}
-            onClick={() => setActiveId(tag.id)}
-            className={clsx(
-              'cursor-pointer rounded-full px-4 py-2 text-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black',
-              active
-                ? 'bg-black font-semibold text-white'
-                : 'border border-[#E5E5E5] bg-white font-normal text-[#666666] hover:bg-neutral-50'
-            )}
-          >
-            {tag.label}
-          </button>
-        );
-      })}
+    <div className="flex items-center gap-[10px]">
+      <label
+        htmlFor={id}
+        className="whitespace-nowrap text-[13px] text-[#666666]"
+      >
+        Filter by
+      </label>
+      <div className="relative">
+        <select
+          id={id}
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          className="min-w-[180px] cursor-pointer appearance-none rounded-[7px] border border-[#E5E5E5] bg-white py-2 pl-3 pr-9 font-inherit text-[13px] font-medium text-[#0a0a0a] outline-none transition-[border-color] duration-150 focus-visible:border-black"
+        >
+          {OPTIONS.map((opt) => (
+            <option key={opt.value} value={opt.value}>
+              {opt.label}
+            </option>
+          ))}
+        </select>
+        <div
+          className="pointer-events-none absolute right-2.5 top-1/2 flex -translate-y-1/2 text-[#666666]"
+          aria-hidden
+        >
+          <ChevronDown size={12} color="currentColor" strokeWidth={2.5} />
+        </div>
+      </div>
     </div>
   );
 }
