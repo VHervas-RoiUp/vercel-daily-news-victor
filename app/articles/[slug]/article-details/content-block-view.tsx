@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import { MarkdownBlock, MarkdownInline } from '@/lib/markdown';
+import { MarkdownBlock, MarkdownInline } from '@/lib/services/markdown';
 import { ContentBlock as ContentBlockType } from '@/types';
 
 export function ContentBlockView({ block }: { block: ContentBlockType }) {
