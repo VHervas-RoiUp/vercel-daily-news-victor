@@ -30,7 +30,7 @@ export default async function SearchPage({
 
   return (
     <div className="bg-[#fafafa]">
-      <div className="bg-[#fafafa] px-8 pt-10">
+      <div className="bg-[#fafafa] px-8 pt-10 pb-4">
         <div className="mx-auto max-w-[760px]">
           <h1 className="text-3xl font-bold text-black">Search</h1>
         </div>

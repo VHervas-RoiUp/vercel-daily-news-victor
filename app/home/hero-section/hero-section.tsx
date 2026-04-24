@@ -30,7 +30,7 @@ export function HeroSection() {
         </p>
         <nav className="flex flex-wrap gap-3" aria-label="Featured actions">
           <Button asChild variant="primary" className="min-h-10 h-10">
-            <Link href="/articles">
+            <Link href="/search">
               Browse articles
               <span aria-hidden="true" className="text-lg leading-none ml-2">
                 →

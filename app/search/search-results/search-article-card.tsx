@@ -50,6 +50,7 @@ export function SearchArticleCard({ article, index }: SearchArticleCardProps) {
             fill
             className="object-cover"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            priority={index === 0}
           />
         ) : (
           <div className="aspect-video w-full bg-[#f5f5f5]" />

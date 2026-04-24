@@ -1,7 +1,13 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useCallback, useTransition, type ReactNode } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useState,
+  useTransition,
+  type ReactNode,
+} from 'react';
 
 import { SearchResultsSkeleton } from '../search-results/search-results-skeleton';
 
@@ -24,6 +30,10 @@ export default function SearchForm({
   const queryFromUrl = searchParams.get('q') ?? '';
   const categoryFromUrl = searchParams.get('category') ?? '';
   const [isSearchTransitionPending, startTransition] = useTransition();
+  const [category, setCategory] = useState(categoryFromUrl);
+  useEffect(() => {
+    setCategory(categoryFromUrl);
+  }, [categoryFromUrl]);
 
   const buildSearchPath = useCallback(
     (updates: { q?: string; category?: string }) => {
@@ -64,6 +74,7 @@ export default function SearchForm({
 
   const onCategoryChange = useCallback(
     (nextCategory: string) => {
+      setCategory(nextCategory);
       navigateToSearch(buildSearchPath({ category: nextCategory }));
     },
     [buildSearchPath, navigateToSearch]
@@ -79,7 +90,7 @@ export default function SearchForm({
           />
           <SearchTags
             options={categoryOptions}
-            selectedCategorySlug={categoryFromUrl}
+            selectedCategorySlug={category}
             onCategoryChange={onCategoryChange}
           />
         </div>

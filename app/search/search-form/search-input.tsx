@@ -1,8 +1,11 @@
 'use client';
 
 import { Search, X } from '@geist-ui/icons';
-import { useEffect, useState, type SubmitEventHandler } from 'react';
+import { useEffect, useRef, useState, type SubmitEventHandler } from 'react';
 import clsx from 'clsx';
+
+const MIN_AUTO_SEARCH_CHARS = 3;
+const AUTO_SEARCH_DEBOUNCE_MS = 350;
 
 type SearchInputProps = {
   urlSearchQuery: string;
@@ -14,18 +17,63 @@ export default function SearchInput({
   onSearchSubmit,
 }: SearchInputProps) {
   const [inputValue, setInputValue] = useState(urlSearchQuery);
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const clearDebounce = () => {
+    if (debounceRef.current !== null) {
+      clearTimeout(debounceRef.current);
+      debounceRef.current = null;
+    }
+  };
 
   useEffect(() => {
     setInputValue(urlSearchQuery);
   }, [urlSearchQuery]);
 
+  useEffect(() => {
+    const trimmed = inputValue.trim();
+    const urlQ = (urlSearchQuery || '').trim();
+
+    debounceRef.current = setTimeout(() => {
+      debounceRef.current = null;
+
+      if (trimmed.length >= MIN_AUTO_SEARCH_CHARS) {
+        if (trimmed !== urlQ) {
+          onSearchSubmit(trimmed);
+        }
+        return;
+      }
+
+      if (trimmed.length === 0) {
+        if (urlQ !== '') {
+          onSearchSubmit('');
+        }
+        return;
+      }
+
+      if (urlQ.length >= MIN_AUTO_SEARCH_CHARS) {
+        onSearchSubmit('');
+      }
+    }, AUTO_SEARCH_DEBOUNCE_MS);
+
+    return () => {
+      if (debounceRef.current !== null) {
+        clearTimeout(debounceRef.current);
+        debounceRef.current = null;
+      }
+    };
+  }, [inputValue, onSearchSubmit, urlSearchQuery]);
+
   const onSubmit: SubmitEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
+    clearDebounce();
     onSearchSubmit(inputValue.trim());
   };
 
   function onClear() {
+    clearDebounce();
     setInputValue('');
+    onSearchSubmit('');
   }
 
   return (
@@ -41,7 +89,7 @@ export default function SearchInput({
         name="q"
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
-        placeholder="Search articles, topics, authors…"
+        placeholder="Search articles by title, excerpt, or tags"
         autoComplete="off"
         className={clsx(
           'box-border w-full rounded-[10px] border-[1.5px] border-[#e5e5e5] bg-white py-[14px] pl-[46px] font-inherit text-base leading-normal text-[#0a0a0a] shadow-[0_1px_4px_rgba(0,0,0,0.04)] outline-none transition-[border-color] duration-150 placeholder:text-neutral-400 focus:border-black',
