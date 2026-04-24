@@ -17,3 +17,30 @@ export type BreakingNewsResponse =
 export type SubscriptionResponse =
   components['schemas']['SubscriptionResponse'];
 export type ErrorResponse = components['schemas']['ErrorResponse'];
+
+export type PublicationConfigResponse = {
+  success?: boolean;
+  data?: PublicationConfig;
+};
+
+export type PublicationConfig = {
+  publicationName?: string;
+  language?: string;
+  features?: {
+    newsletter?: boolean;
+    bookmarks?: boolean;
+    comments?: boolean;
+    darkMode?: boolean;
+    searchSuggestions?: boolean;
+  };
+  socialLinks?: {
+    twitter?: string;
+    github?: string;
+    discord?: string;
+  };
+  seo?: {
+    defaultTitle?: string;
+    titleTemplate?: string;
+    defaultDescription?: string;
+  };
+};

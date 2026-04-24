@@ -5,8 +5,14 @@ import Triangle from '@/components/ui/triangle';
 import NavLinks from '@/layout/nav-links';
 import NavLinksFallback from '@/layout/nav-links-fallback';
 import HeaderSubscriptionStatus from '@/components/subscription/header-subscription-status';
+import { getPublicationConfig } from '@/lib/api/publication';
 
-export default function Header() {
+const FALLBACK_BRAND = 'Vercel Daily';
+
+export default async function Header() {
+  const config = await getPublicationConfig();
+  const brand = config?.publicationName ?? FALLBACK_BRAND;
+
   return (
     <header className="border-b border-neutral-200 bg-white sticky top-0 z-50">
       <nav
@@ -20,7 +26,7 @@ export default function Header() {
           >
             <Triangle />
             <span className="text-sm font-bold tracking-tight sm:text-base">
-              Vercel Daily
+              {brand}
             </span>
           </Link>
           <Suspense fallback={<NavLinksFallback />}>

@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { getArticleDetails, getArticleList } from '@/lib/api/articles';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
@@ -26,6 +27,42 @@ export async function generateStaticParams() {
   } catch (err) {
     throw err;
   }
+}
+
+export async function generateMetadata({
+  params,
+}: ArticlePageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const article = await getArticleDetails(slug);
+  if (!article) {
+    notFound();
+  }
+
+  const title = article.title ?? 'Article';
+  const description = article.excerpt ?? undefined;
+  const path = `/articles/${encodeURIComponent(slug)}`;
+  const image = article.image;
+  const authorName = article.author?.name;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      type: 'article',
+      url: path,
+      publishedTime: article.publishedAt,
+      authors: authorName ? [authorName] : undefined,
+      images: image
+        ? [
+            {
+              url: image,
+              alt: title,
+            },
+          ]
+        : undefined,
+    },
+    twitter: image ? { images: [image] } : undefined,
+  };
 }
 
 export default async function ArticlePage({ params }: ArticlePageProps) {

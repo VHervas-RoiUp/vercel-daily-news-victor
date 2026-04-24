@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { Suspense } from 'react';
 
 import { getCategories } from '@/lib/api/categories';
@@ -22,6 +23,15 @@ function SearchPageSuspenseFallback() {
     </>
   );
 }
+
+const SEARCH_LEAD =
+  'Search Vercel Daily articles by keyword or filter by category.';
+
+export const metadata: Metadata = {
+  title: 'Search',
+  description: SEARCH_LEAD,
+  openGraph: { url: '/search' },
+};
 
 export default async function SearchPage({
   searchParams,
