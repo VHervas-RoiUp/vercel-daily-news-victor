@@ -1,5 +1,8 @@
 import { Suspense } from 'react';
 
+import { getCategories } from '@/lib/api/categories';
+
+import { buildCategoryOptions } from './category-options';
 import SearchForm from './search-form';
 import SearchResults from './search-results';
 import { SearchResultsSkeleton } from './search-results/search-results-skeleton';
@@ -20,16 +23,20 @@ function SearchPageSuspenseFallback() {
   );
 }
 
-export default function SearchPage({ searchParams }: PageProps<'/search'>) {
+export default async function SearchPage({
+  searchParams,
+}: PageProps<'/search'>) {
+  const categoryOptions = buildCategoryOptions(await getCategories());
+
   return (
     <div className="bg-[#fafafa]">
-      <div className="px-8 pt-10 bg-[#fafafa]">
+      <div className="bg-[#fafafa] px-8 pt-10">
         <div className="mx-auto max-w-[760px]">
           <h1 className="text-3xl font-bold text-black">Search</h1>
         </div>
       </div>
       <Suspense fallback={<SearchPageSuspenseFallback />}>
-        <SearchForm>
+        <SearchForm categoryOptions={categoryOptions}>
           <Suspense fallback={<SearchResultsSkeleton />}>
             <SearchResults searchParams={searchParams} />
           </Suspense>

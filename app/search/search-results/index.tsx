@@ -15,9 +15,14 @@ export default async function SearchResults({
   const searchQuery =
     typeof searchParams?.q === 'string' ? searchParams?.q : undefined;
   const searchTerm = searchQuery?.trim();
+  const categorySlug =
+    typeof searchParams?.category === 'string'
+      ? searchParams.category.trim()
+      : undefined;
 
   const articles = await getArticleList({
     search: searchTerm || undefined,
+    category: categorySlug || undefined,
     limit: 5,
   });
 

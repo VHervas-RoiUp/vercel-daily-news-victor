@@ -5,27 +5,23 @@ import { useEffect, useState, type SubmitEventHandler } from 'react';
 import clsx from 'clsx';
 
 type SearchInputProps = {
-  initialQuery: string;
-  onNavigateSearch: (targetPath: string) => void;
+  urlSearchQuery: string;
+  onSearchSubmit: (submittedQuery: string) => void;
 };
 
 export default function SearchInput({
-  initialQuery,
-  onNavigateSearch,
+  urlSearchQuery,
+  onSearchSubmit,
 }: SearchInputProps) {
-  const [inputValue, setInputValue] = useState(initialQuery);
+  const [inputValue, setInputValue] = useState(urlSearchQuery);
 
   useEffect(() => {
-    setInputValue(initialQuery);
-  }, [initialQuery]);
+    setInputValue(urlSearchQuery);
+  }, [urlSearchQuery]);
 
   const onSubmit: SubmitEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    const trimmedQuery = inputValue.trim();
-    const searchUrl = trimmedQuery
-      ? `/search?q=${encodeURIComponent(trimmedQuery)}`
-      : '/search';
-    onNavigateSearch(searchUrl);
+    onSearchSubmit(inputValue.trim());
   };
 
   function onClear() {

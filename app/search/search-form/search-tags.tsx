@@ -1,19 +1,31 @@
 'use client';
 
 import { ChevronDown } from '@geist-ui/icons';
-import { useId, useState } from 'react';
+import { useId, useMemo } from 'react';
 
-const OPTIONS = [
-  { value: 'All', label: 'All categories' },
-  { value: 'Engineering', label: 'Engineering' },
-  { value: 'Changelog', label: 'Changelog' },
-  { value: 'Company News', label: 'Company News' },
-  { value: 'Customer Story', label: 'Customer Story' },
-] as const;
+type SearchTagsProps = {
+  options: { value: string; label: string }[];
+  selectedCategorySlug: string;
+  onCategoryChange: (nextCategorySlug: string) => void;
+};
 
-export default function SearchTags() {
+export default function SearchTags({
+  options,
+  selectedCategorySlug,
+  onCategoryChange,
+}: SearchTagsProps) {
   const id = useId();
-  const [value, setValue] = useState<string>(OPTIONS[0].value);
+  const selectValue = useMemo(
+    () =>
+      options.some((option) => option.value === selectedCategorySlug)
+        ? selectedCategorySlug
+        : '',
+    [options, selectedCategorySlug]
+  );
+
+  const onSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    onCategoryChange(e.target.value);
+  };
 
   return (
     <div className="flex items-center gap-[10px]">
@@ -26,13 +38,13 @@ export default function SearchTags() {
       <div className="relative">
         <select
           id={id}
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
+          value={selectValue}
+          onChange={onSelectChange}
           className="min-w-[180px] cursor-pointer appearance-none rounded-[7px] border border-[#E5E5E5] bg-white py-2 pl-3 pr-9 font-inherit text-[13px] font-medium text-[#0a0a0a] outline-none transition-[border-color] duration-150 focus-visible:border-black"
         >
-          {OPTIONS.map((opt) => (
-            <option key={opt.value} value={opt.value}>
-              {opt.label}
+          {options.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
             </option>
           ))}
         </select>

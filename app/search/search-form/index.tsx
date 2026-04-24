@@ -8,23 +8,65 @@ import { SearchResultsSkeleton } from '../search-results/search-results-skeleton
 import SearchInput from './search-input';
 import SearchTags from './search-tags';
 
+import type { CategorySelectOption } from '../category-options';
+
 type SearchFormProps = {
+  categoryOptions: CategorySelectOption[];
   children: ReactNode;
 };
 
-export default function SearchForm({ children }: SearchFormProps) {
+export default function SearchForm({
+  categoryOptions,
+  children,
+}: SearchFormProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const initialQuery = searchParams.get('q') ?? '';
-  const [isSearchNavigationPending, startTransition] = useTransition();
+  const queryFromUrl = searchParams.get('q') ?? '';
+  const categoryFromUrl = searchParams.get('category') ?? '';
+  const [isSearchTransitionPending, startTransition] = useTransition();
 
-  const onNavigateSearch = useCallback(
-    (targetPath: string) => {
+  const buildSearchPath = useCallback(
+    (updates: { q?: string; category?: string }) => {
+      const searchQueryToUse =
+        (updates.q !== undefined
+          ? updates.q
+          : (searchParams.get('q') ?? '')
+        ).trim();
+      const categoryToUse =
+        updates.category !== undefined
+          ? updates.category
+          : (searchParams.get('category') ?? '');
+
+      const nextParams = new URLSearchParams();
+      if (searchQueryToUse) nextParams.set('q', searchQueryToUse);
+      if (categoryToUse) nextParams.set('category', categoryToUse);
+      const queryString = nextParams.toString();
+      return queryString ? `/search?${queryString}` : '/search';
+    },
+    [searchParams]
+  );
+
+  const navigateToSearch = useCallback(
+    (path: string) => {
       startTransition(() => {
-        router.push(targetPath);
+        router.push(path);
       });
     },
     [router]
+  );
+
+  const onSearchSubmit = useCallback(
+    (submittedQuery: string) => {
+      navigateToSearch(buildSearchPath({ q: submittedQuery }));
+    },
+    [buildSearchPath, navigateToSearch]
+  );
+
+  const onCategoryChange = useCallback(
+    (nextCategory: string) => {
+      navigateToSearch(buildSearchPath({ category: nextCategory }));
+    },
+    [buildSearchPath, navigateToSearch]
   );
 
   return (
@@ -32,13 +74,17 @@ export default function SearchForm({ children }: SearchFormProps) {
       <div className="border-b border-[#e5e5e5] bg-[#fafafa] px-8 pb-8 pt-0">
         <div className="mx-auto max-w-[760px]">
           <SearchInput
-            initialQuery={initialQuery ?? ''}
-            onNavigateSearch={onNavigateSearch}
+            urlSearchQuery={queryFromUrl}
+            onSearchSubmit={onSearchSubmit}
           />
-          <SearchTags />
+          <SearchTags
+            options={categoryOptions}
+            selectedCategorySlug={categoryFromUrl}
+            onCategoryChange={onCategoryChange}
+          />
         </div>
       </div>
-      {isSearchNavigationPending ? <SearchResultsSkeleton /> : children}
+      {isSearchTransitionPending ? <SearchResultsSkeleton /> : children}
     </>
   );
 }
