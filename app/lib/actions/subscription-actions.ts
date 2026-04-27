@@ -5,28 +5,36 @@ import {
   activateSubscription,
   createSubscription,
   deleteSubscription,
+  isSubscriptionNotFound,
 } from '../api/subscription';
 import {
+  clearSubscriptionToken,
   getSubscriptionToken,
   setSubscriptionToken,
 } from '../services/subscription-token';
 
 export async function subscribeAction() {
-  const token = await getSubscriptionToken();
+  const existing = await getSubscriptionToken();
 
-  if (token) {
-    await activateSubscription(token);
-    revalidatePath('/');
-    return;
+  if (existing) {
+    try {
+      await activateSubscription(existing);
+      updateTag('subscription');
+      revalidatePath('/');
+      return;
+    } catch (e) {
+      if (!isSubscriptionNotFound(e)) {
+        throw e;
+      }
+      await clearSubscriptionToken();
+    }
   }
 
-  const data = await createSubscription();
-  if (data.token) {
-    await setSubscriptionToken(data.token);
-    await activateSubscription(data.token);
-    updateTag('subscription');
-    revalidatePath('/');
-  }
+  const created = await createSubscription();
+  await setSubscriptionToken(created.token);
+  await activateSubscription(created.token);
+  updateTag('subscription');
+  revalidatePath('/');
 }
 
 export async function unsubscribeAction() {

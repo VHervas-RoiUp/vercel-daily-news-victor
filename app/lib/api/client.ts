@@ -1,9 +1,9 @@
 import type { ErrorResponse } from 'types';
 
-export async function apiFetch<T>(
+export async function apiFetchEx<T>(
   path: string,
   params?: RequestInit
-): Promise<T> {
+): Promise<{ json: T; res: Response }> {
   const pathPart = path.startsWith('/') ? path : `/${path}`;
   const url = `${process.env.NEXT_PUBLIC_BASE_URL}${pathPart}`;
 
@@ -32,5 +32,13 @@ export async function apiFetch<T>(
     });
   }
 
-  return json as T;
+  return { json: json as T, res };
+}
+
+export async function apiFetch<T>(
+  path: string,
+  params?: RequestInit
+): Promise<T> {
+  const { json } = await apiFetchEx<T>(path, params);
+  return json;
 }
