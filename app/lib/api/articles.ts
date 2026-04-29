@@ -52,6 +52,9 @@ export async function getArticleDetails(id: string): Promise<Article | null> {
 }
 
 export async function getTrendingArticles(): Promise<Article[] | null> {
+  'use cache';
+  cacheLife('minutes');
+
   try {
     const res = await apiFetch<ArticleListResponse>('/articles/trending');
     return res.data ?? null;

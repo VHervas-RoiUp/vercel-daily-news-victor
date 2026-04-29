@@ -6,21 +6,21 @@ import { getBreakingNews } from '@/lib/api/breaking-news';
 export function BreakingNewsBannerSkeleton() {
   return (
     <div
-      className="w-full bg-black py-2 text-white sm:h-14 sm:py-0"
+      className="w-full bg-neutral-600/90 py-2 text-white sm:h-14 sm:py-0"
       role="status"
       aria-label="Loading breaking news"
     >
-      <div className="mx-auto flex h-full min-h-14 max-w-7xl items-center gap-2 general-padding-x sm:min-h-0 sm:gap-4">
+      <div className="mx-auto flex h-full min-h-14 max-w-7xl animate-pulse items-center gap-2 general-padding-x sm:min-h-0 sm:gap-4">
         <div
-          className="h-5 w-5 shrink-0 rounded-sm bg-neutral-800 animate-pulse"
+          className="h-5 w-5 shrink-0 rounded-sm bg-neutral-500/90"
           aria-hidden
         />
         <div
-          className="h-6 w-16 shrink-0 rounded bg-neutral-800 animate-pulse"
+          className="h-6 w-16 shrink-0 rounded bg-neutral-500/90"
           aria-hidden
         />
         <div className="min-w-0 flex-1" aria-hidden>
-          <div className="h-3.5 w-full max-w-2xl rounded bg-neutral-800 animate-pulse" />
+          <div className="h-3.5 w-full max-w-2xl rounded bg-neutral-400/85" />
         </div>
       </div>
     </div>
