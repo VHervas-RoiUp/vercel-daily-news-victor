@@ -1,4 +1,5 @@
 import { cacheLife, cacheTag } from 'next/cache';
+import { cache } from 'react';
 
 import { Subscription, SubscriptionResponse } from '@/types';
 import { getSubscriptionToken } from '@/lib/services/subscription-token';
@@ -61,13 +62,14 @@ export const activateSubscription = async (token: string) => {
   return response.data as Subscription;
 };
 
-export const getSubscription = async () => {
+export const getSubscription = cache(async () => {
   const token = await getSubscriptionToken();
   if (!token) {
     return null;
   }
   return getSubscriptionData(token);
-};
+});
+
 export const deleteSubscription = async (token: string) => {
   const response = await apiFetch<SubscriptionResponse>('/subscription', {
     method: 'DELETE',
