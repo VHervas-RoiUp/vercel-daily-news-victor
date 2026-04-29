@@ -5,6 +5,7 @@ import Triangle from '@/components/ui/triangle';
 import NavLinks from '@/layout/nav-links';
 import NavLinksFallback from '@/layout/nav-links-fallback';
 import HeaderSubscriptionStatus from '@/components/subscription/header-subscription-status';
+import { HeaderSubscriptionStatusSkeleton } from '@/components/subscription/header-subscription-status-skeleton';
 import { getDefaultHeaderBrand } from '@/lib/services/env-defaults';
 import { getPublicationConfig } from '@/lib/api/publication';
 
@@ -30,7 +31,7 @@ export default async function Header() {
               <NavLinks />
             </Suspense>
           </div>
-          <Suspense>
+          <Suspense fallback={<HeaderSubscriptionStatusSkeleton />}>
             <HeaderSubscriptionStatus />
           </Suspense>
         </div>
@@ -45,7 +46,7 @@ export default async function Header() {
                 {brand}
               </span>
             </Link>
-            <Suspense>
+            <Suspense fallback={<HeaderSubscriptionStatusSkeleton />}>
               <HeaderSubscriptionStatus />
             </Suspense>
           </div>
