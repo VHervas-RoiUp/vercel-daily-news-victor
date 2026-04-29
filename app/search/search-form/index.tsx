@@ -12,7 +12,7 @@ import {
 import { SearchResultsSkeleton } from '../search-results/search-results-skeleton';
 
 import SearchInput from './search-input';
-import SearchTags from './search-tags';
+import SearchCategories from './search-categories';
 
 import type { CategorySelectOption } from '../category-options';
 
@@ -37,11 +37,9 @@ export default function SearchForm({
 
   const buildSearchPath = useCallback(
     (updates: { q?: string; category?: string }) => {
-      const searchQueryToUse =
-        (updates.q !== undefined
-          ? updates.q
-          : (searchParams.get('q') ?? '')
-        ).trim();
+      const searchQueryToUse = (
+        updates.q !== undefined ? updates.q : (searchParams.get('q') ?? '')
+      ).trim();
       const categoryToUse =
         updates.category !== undefined
           ? updates.category
@@ -88,7 +86,7 @@ export default function SearchForm({
             urlSearchQuery={queryFromUrl}
             onSearchSubmit={onSearchSubmit}
           />
-          <SearchTags
+          <SearchCategories
             options={categoryOptions}
             selectedCategorySlug={category}
             onCategoryChange={onCategoryChange}

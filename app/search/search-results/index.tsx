@@ -23,7 +23,7 @@ export default async function SearchResults({
   const articles = await getArticleList({
     search: searchTerm || undefined,
     category: categorySlug || undefined,
-    limit: 5,
+    limit: searchTerm ? 5 : 12,
   });
 
   const list = articles?.filter((a) => a.slug) ?? [];

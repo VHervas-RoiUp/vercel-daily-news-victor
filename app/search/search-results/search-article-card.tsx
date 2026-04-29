@@ -68,7 +68,6 @@ export function SearchArticleCard({ article, index }: SearchArticleCardProps) {
           {dateLabel ? (
             <time dateTime={article.publishedAt}>{dateLabel}</time>
           ) : null}
-          {dateLabel ? <span className="text-[#a3a3a3]">·</span> : null}
         </div>
         <h3 className="mb-2 flex-1 text-[15px] font-bold leading-[1.4] tracking-[-0.02em] text-[#0a0a0a]">
           {article.title}

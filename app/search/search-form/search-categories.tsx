@@ -3,17 +3,17 @@
 import { ChevronDown } from '@geist-ui/icons';
 import { useId, useMemo } from 'react';
 
-type SearchTagsProps = {
+type SearchCategoriesProps = {
   options: { value: string; label: string }[];
   selectedCategorySlug: string;
   onCategoryChange: (nextCategorySlug: string) => void;
 };
 
-export default function SearchTags({
+export default function SearchCategories({
   options,
   selectedCategorySlug,
   onCategoryChange,
-}: SearchTagsProps) {
+}: SearchCategoriesProps) {
   const id = useId();
   const selectValue = useMemo(
     () =>
