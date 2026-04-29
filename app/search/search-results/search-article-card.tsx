@@ -64,9 +64,21 @@ export function SearchArticleCard({ article, index }: SearchArticleCardProps) {
         </div>
       </div>
       <div className="flex min-h-0 flex-1 flex-col px-5 pb-5 pt-[18px]">
-        <div className="mb-2.5 flex flex-wrap items-center gap-2 text-xs text-[#666666]">
+        <div className="mb-2.5 flex flex-wrap items-center justify-between gap-2 text-xs text-[#666666]">
           {dateLabel ? (
             <time dateTime={article.publishedAt}>{dateLabel}</time>
+          ) : null}
+          {article.tags && article.tags.length > 0 ? (
+            <div className="flex flex-wrap items-center gap-1.5">
+              {article.tags.map((tag, i) => (
+                <span
+                  key={`${tag}-${i}`}
+                  className="rounded-full border border-neutral-200 bg-neutral-50 px-2 py-0.5 text-[11px] leading-none text-neutral-600"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
           ) : null}
         </div>
         <h3 className="mb-2 flex-1 text-[15px] font-bold leading-[1.4] tracking-[-0.02em] text-[#0a0a0a]">

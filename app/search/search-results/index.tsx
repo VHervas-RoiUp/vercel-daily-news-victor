@@ -8,6 +8,23 @@ type SearchResultsProps = {
   searchParams: PageProps<'/search'>['searchParams'];
 };
 
+function searchResultsHeading(
+  searchTerm: string | undefined,
+  categorySlug: string | undefined,
+  articleCount: number
+) {
+  if (searchTerm && categorySlug) {
+    return `${articleCount} articles found for "${searchTerm}" in category "${categorySlug}"`;
+  }
+  if (searchTerm) {
+    return `${articleCount} articles found for "${searchTerm}"`;
+  }
+  if (categorySlug) {
+    return `${articleCount} articles found in category "${categorySlug}"`;
+  }
+  return `${articleCount} recent articles`;
+}
+
 export default async function SearchResults({
   searchParams: searchParamsPromise,
 }: SearchResultsProps) {
@@ -20,14 +37,16 @@ export default async function SearchResults({
       ? searchParams.category.trim()
       : undefined;
 
+  const hasSearched = Boolean(searchTerm || categorySlug);
+
   const articles = await getArticleList({
     search: searchTerm || undefined,
     category: categorySlug || undefined,
-    limit: searchTerm ? 5 : 12,
+    limit: hasSearched ? 5 : 12,
   });
 
   const list = articles?.filter((a) => a.slug) ?? [];
-  const heading = searchTerm ? 'Search results' : 'Recent articles';
+  const heading = searchResultsHeading(searchTerm, categorySlug, list.length);
 
   if (list.length === 0) {
     if (searchTerm) {
